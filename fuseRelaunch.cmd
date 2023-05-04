@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "/home/aarijimam/NUST Material/CSA/Assignment2/Assignment2/datapath_isim_beh.exe" -prj "/home/aarijimam/NUST Material/CSA/Assignment2/Assignment2/datapath_beh.prj" "work.datapath" "work.glbl" 

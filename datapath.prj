@@ -1,0 +1,3 @@
+verilog work "decoder.v"
+verilog work "ALU.v"
+verilog work "DatapathMainModule.v"
