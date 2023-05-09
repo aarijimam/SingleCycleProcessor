@@ -59,7 +59,7 @@ always @(*)
 	out = const;
 	end
 	
-	else if (opcode == 4'b 0111)
+	else if (opcode == 4'b 0111) //lw
 	begin
 	dataaddress=a+const;
 	//memoryvalue = DataMemory[dataaddress];

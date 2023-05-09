@@ -2,17 +2,17 @@
 
  module datapath(clk,reset);
  
-	reg [15:0] ROM [15:0];
-  reg [15:0] RegisterFile [7:0];
-    reg [15:0] DataMemory [7:0];
+	reg [31:0] ROM [15:0];
+ 	reg [31:0] RegisterFile [7:0];
+    reg [31:0] DataMemory [7:0];
 	input clk,reset;
 	reg [3:0]index;
 	reg [1:0]type;
-	wire [3:0]opcode;
-	wire [2:0]Dest,op1ad,op2ad,shamt;
-	reg [15:0]a,b,memoryvalue,regdata,InstrReg;
-	wire [5:0]const;
-	wire [8:0]address;
+	wire [5:0]opcode;
+	wire [4:0]Dest,op1ad,op2ad,shamt;
+	reg [31:0]a,b,memoryvalue,regdata,InstrReg;
+	wire [15:0]const;
+	wire [25:0]address;
 	reg RegWrite,MemWrite,MemRead;
 	wire [15:0] d,dataaddress;
 	reg [3:0] ra;
@@ -23,7 +23,7 @@ end
 	//Instruction Memory/ROM
 initial
 begin
-	ROM[0] = 16'b 0000110100010000;
+	ROM[0] = 32'b 0000110100010000;
 	ROM[1] = 16'b 0100110100010001;
 	ROM[2] = 16'b 0000100100010111;
 	ROM[3] = 16'b 0000110100011000;
