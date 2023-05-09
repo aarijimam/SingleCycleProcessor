@@ -8,13 +8,13 @@
 <!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.    -->
 
 <messages>
-<msg type="info" file="ProjectMgmt" num="1845" ><arg fmt="%s" index="1">Analyzing Verilog file &quot;/home/aarijimam/NUST Material/CSA/Assignment2/Assignment2/ALU.v&quot; into library work</arg>
+<msg type="info" file="ProjectMgmt" num="1845" ><arg fmt="%s" index="1">Analyzing Verilog file &quot;/home/aarijimam/Documents/GitHub/SingleCycleProcessor/ALU.v&quot; into library work</arg>
 </msg>
 
-<msg type="info" file="ProjectMgmt" num="1845" ><arg fmt="%s" index="1">Analyzing Verilog file &quot;/home/aarijimam/NUST Material/CSA/Assignment2/Assignment2/DatapathMainModule.v&quot; into library work</arg>
+<msg type="info" file="ProjectMgmt" num="1845" ><arg fmt="%s" index="1">Analyzing Verilog file &quot;/home/aarijimam/Documents/GitHub/SingleCycleProcessor/DatapathMainModule.v&quot; into library work</arg>
 </msg>
 
-<msg type="info" file="ProjectMgmt" num="1845" ><arg fmt="%s" index="1">Analyzing Verilog file &quot;/home/aarijimam/NUST Material/CSA/Assignment2/Assignment2/decoder.v&quot; into library work</arg>
+<msg type="info" file="ProjectMgmt" num="1845" ><arg fmt="%s" index="1">Analyzing Verilog file &quot;/home/aarijimam/Documents/GitHub/SingleCycleProcessor/decoder.v&quot; into library work</arg>
 </msg>
 
 </messages>
