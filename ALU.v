@@ -1,72 +1,48 @@
 	//ALU Block
-	module ALUez (a,b,shamt);
+	module ALU (a,b,shamt,funct,ALUOp,out,zero);
 	input  [15:0]a,b;
 	input  [4:0]shamt;
-	output reg [15:0] out;
+	input [5:0]funct;
+	input [1:0]ALUOp;
+	output reg [31:0] out;
+	output reg zero;
 
 always @(*)
 	begin
-	if (opcode == 4'b 0000)
+	if(ALUOp == 2'b 00)
 	begin
-	out = a + b;
+		out = a+b;
 	end
-	else if (opcode == 4'b 1010)
+	else if(ALUOp == 2'b 01)
 	begin
-	out = a - b;
+		out = a - b;
 	end
-	else if (opcode == 4'b 1011)
-	begin
-	out = a * b;
+	else
+	begin 
+		if(funct == 6'b 100000) //add
+			out = a+b;
+		else if(funct == 6'b 100010) //sub
+			out = a-b;
+		else if(funct == 6'b 011000) //mul
+			out = a*b;
+		else if(funct == 6'b 011010) //div
+			out = a/b;
+		else if(funct == 6'b 000000) //sll
+			out = a<<shamt;
+		else if(funct == 6'b 000010) //srl
+			out = a>>shamt;
+		else if(funct == 6'b 100101) //or
+			out = a|b;
+		else if(funct == 6'b 100100) //and
+			out = a&b;
+		else if(funct == 6'b 100111) //nor
+			out = ~(a|b);
+		else if(funct == 6'b 100110) //xor
+			out = (a&~b) + (~a&b);
 	end
-	else if (opcode == 4'b 0001)
-	begin
-	out = a << shamt;
-	end
-	else if (opcode == 4'b 0010)
-	begin
-	out = a >> shamt;
-	end
-	else if (opcode == 4'b 0011)
-	begin
-	out = a | b;
-	end
-	else if (opcode == 4'b 0100)
-	begin
-	out = a & b;
-	end
-	else if (opcode == 4'b 1100)
-	begin
-	out = ~a;
-	end
-	else if (opcode == 4'b 1101)
-	begin
-	out = a / b;
-	end
-	
-	
-	else if (opcode == 4'b 0101)
-	begin
-	out = a + const;
-	end
-	
-	else if (opcode == 4'b 0110)
-	begin
-	out = const;
-	end
-	
-	else if (opcode == 4'b 0111) //lw
-	begin
-	dataaddress=a+const;
-	//memoryvalue = DataMemory[dataaddress];
-	//out = memoryvalue;
-	end
-	
-	//sw
-	else if (opcode == 4'b 1000)
-	begin
-	dataaddress=a+const;
-	//regdata=RegisterFile[Dest];
-	//DataMemory[dataaddress]= regdata;
-	end
+	if(out == 0){
+		zero = 1;
+	}
+		
 	end
 	  endmodule

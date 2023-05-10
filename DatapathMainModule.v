@@ -13,7 +13,7 @@
 	reg [31:0]a,b,memoryvalue,regdata,InstrReg;
 	wire [15:0]const;
 	wire [25:0]address;
-	reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch;
+	reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,zero;
 	reg [1:0] ALUOp;
 	wire [15:0] d,dataaddress;
 	reg [3:0] ra;
@@ -90,7 +90,7 @@ begin
 end
 
 if()
-ALUez z (a,b,shamt);
+ALU z (a,b,shamt,out,zero);
 
 always @ (*)
 begin
