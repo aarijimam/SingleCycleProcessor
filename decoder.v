@@ -20,9 +20,9 @@ begin
 	address = InstrReg[25:0];
 
 	//			add						sub						mul					div						sll
-	if(opcode == 6'b 100000  || opcode == 6'b 100010 || opcode == 6'b 011000 || opcode == 6'b 011010 || opcode == 6'b 000000
+	
 	// 			srl						or						and					nor						xor
-		opcode == 6'b 000010 || opcode == 6'b 100101 || opcode == 6'b 100100 || opcode == 6'b 100111 || opcode == 6'b 100110)
+	if(opcode == 6'b 000000)
 	begin
 		MemWrite = 0;
 		MemRead = 0;
@@ -32,6 +32,7 @@ begin
 		Branch = 0;
 		ALUOp = 2'b 10;
 	end
+	
 	// 		addi					li					lw				sw
 	else if(opcode == 001000 || opcode == xxxx || opcode == 100011 || opcode == 101011)
 	begin
