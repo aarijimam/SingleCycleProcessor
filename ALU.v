@@ -1,13 +1,8 @@
 	//ALU Block
-	module ALUez (a,b,shamt,index,const,address,opcode,out,dataaddress);
+	module ALUez (a,b,shamt);
 	input  [15:0]a,b;
-	input  [2:0]shamt;
-	input [3:0]index;
-	input  [5:0]const;
-	input [8:0]address;
-	input [3:0]opcode;
+	input  [4:0]shamt;
 	output reg [15:0] out;
-	output reg [15:0] dataaddress;
 
 always @(*)
 	begin

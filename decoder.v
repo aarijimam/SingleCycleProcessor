@@ -37,22 +37,46 @@ begin
 	// 		addi				
 	else if(opcode == 001000)
 	begin
-
+		MemWrite = 0;
+		MemRead = 0;
+		RegWrite = 1;
+		RegDst = 0;
+		ALUSrc = 1;
+		Branch = 0;
+		ALUOp = 2'b 00;
 	end
 	//		li(pseudo)
 	else if(opcode == 100111)
 	begin 
-
+		MemWrite = 0;
+		MemRead = 0;
+		RegWrite = 1;
+		RegDst = 0;
+		ALUSrc = 1;
+		Branch = 0;
+		ALUOp = 2'b 00;
 	end
 	//		lw
 	else if(opcode == 100011)
 	begin 
-
+		MemWrite = 0;
+		MemRead = 1;
+		RegWrite = 1;
+		RegDst = 0;
+		ALUSrc = 1;
+		Branch = 0;
+		ALUOp = 2'b 00;
 	end
 	//			sw
 	else if(opcode == 101011)
 	begin 
-		
+		MemWrite = 1;
+		MemRead = 0;
+		RegWrite = 0;
+		RegDst = 1;
+		ALUSrc = 1;
+		Branch = 0;
+		ALUOp = 2'b 00;
 	end
 
 	//			jump
@@ -60,6 +84,18 @@ begin
 	begin 
 
 	end
+	//		beq
+	else if(opcode == 000100)
+	begin 
+		MemWrite = 0;
+		MemRead = 0;
+		RegWrite = 0;
+		RegDst = 1;
+		ALUSrc = 0;
+		Branch = 1;
+		ALUOp = 2'b 01;
+	end
+
 	else
 	begin
 	 $display ("Error:  Incorrent Operand");

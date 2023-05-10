@@ -72,77 +72,26 @@ end
   
   //determining instruction type + decoding
 always@(posedge clk, negedge reset)
-  begin
+begin
     if (reset==1)
 		index=0;
     else
 	InstrReg = ROM[index][31:0];
-	end
+end
 	
 	decoder y (InstrReg,opcode,rs,rt,rd,shamt,const,address,funct,RegWrite,MemRead,MemWrite,RegDst,ALUSrc,PCSrc,Branch,ALUOp);
 always @ (posedge clk)
 begin
-	if (opcode == 4'b 0000 || opcode == 4'b 0001 || opcode == 4'b 0010 || opcode == 4'b 0011 || opcode == 4'b 0100) 
-	  begin
-		   a=RegisterFile[rs][15:0];
-		   b=RegisterFile[rt][15:0];
-		end
-	  else if (opcode == 4'b 0101 || opcode == 4'b 0110 || opcode == 4'b 0111 || opcode == 4'b 1000 || opcode == 4'b 1110)
-	  begin
-		a=RegisterFile[rs][15:0];
-		end
-		else
-		begin
-		a=RegisterFile[rs][15:0];
-		end
-//Control
-	 //Assigning Signals
-	begin
-	if (opcode == 4'b 0000 || opcode == 4'b 0001 || opcode == 4'b 0010 || opcode == 4'b 0011 || opcode == 4'b 0100 || opcode == 4'b 1010 || opcode == 4'b 1011 || opcode == 4'b 1100 || opcode == 4'b 1101 || opcode== 4'b 0101 || opcode== 4'b 0110 || opcode== 4'b 0111 )
-		//R-Type, Addi, Load Wort,Load Immediate : RegWeite= 1
-		begin
-		RegWrite=1;
-		MemRead=0;
-		MemWrite=0;
-		end
+	a = RegisterFile[rs];
+	if(ALUSrc == 0)
+		b = RegisterFile[rd];
 	else
-	RegWrite = 0;
-	if (opcode == 4'b 0111)
-	MemRead = 1;
-	end
-	begin
-	if (opcode == 4'b 1000)
-	  begin
-	MemWrite = 1;
-	RegWrite = 0;
-	MemRead = 0;
-	end
-	else
-	MemWrite=0;
-	end
-	
-	begin
- if (RegWrite == 1 && MemRead == 1)
-    begin
-  memoryvalue = DataMemory[dataaddress];
-  RegisterFile[rd]=memoryvalue;
-  end
-  else if (RegWrite == 0 && MemRead == 0 && MemWrite == 1)
-    begin
-  regdata = RegisterFile[rd];
-  DataMemory[dataaddress]=regdata;
-  end
-  if (opcode != 4'b 1001 && opcode != 4'b 1110 && opcode != 4'b 1111)
-	index = index + 1;
-	//j
-	if (opcode == 4'b 1001)
-	begin
-	index=index+address;
-	end
-	
+		b = const;
 end
-	end
-ALUez z (a,b,shamt,index,const,address,opcode,d[15:0],dataaddress[15:0]);
+
+if()
+ALUez z (a,b,shamt);
+
 always @ (*)
 begin
 	if (RegWrite == 1 && MemWrite==0 && MemRead==0)
@@ -168,7 +117,7 @@ begin
 	      end
 	
 	end
-	end
+end
 
  
 endmodule 
