@@ -40,9 +40,9 @@ always @(*)
 		else if(funct == 6'b 100110) //xor
 			out = (a&~b) + (~a&b);
 	end
-	if(out == 0){
+	if(out == 0)
 		zero = 1;
-	}
+
 		
 	end
 	  endmodule
