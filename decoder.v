@@ -32,14 +32,34 @@ begin
 		Branch = 0;
 		ALUOp = 2'b 10;
 	end
-	
-	// 		addi					li					lw				sw
-	else if(opcode == 001000 || opcode == xxxx || opcode == 100011 || opcode == 101011)
+
+	//I Type
+	// 		addi				
+	else if(opcode == 001000)
 	begin
 
 	end
+	//		li(pseudo)
+	else if(opcode == 100111)
+	begin 
+
+	end
+	//		lw
+	else if(opcode == 100011)
+	begin 
+
+	end
+	//			sw
+	else if(opcode == 101011)
+	begin 
+		
+	end
+
 	//			jump
 	else if(opcode == 000010)
+	begin 
+
+	end
 	else
 	begin
 	 $display ("Error:  Incorrent Operand");
