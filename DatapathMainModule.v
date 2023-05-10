@@ -13,7 +13,8 @@
 	reg [31:0]a,b,memoryvalue,regdata,InstrReg;
 	wire [15:0]const;
 	wire [25:0]address;
-	reg RegWrite,MemWrite,MemRead;
+	reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch;
+	reg [1:0] ALUOp;
 	wire [15:0] d,dataaddress;
 	reg [3:0] ra;
 initial
@@ -78,7 +79,7 @@ always@(posedge clk, negedge reset)
 	InstrReg = ROM[index][31:0];
 	end
 	
-	decoder y (InstrReg,opcode,rs,rt,rd,shamt,const,address,funct,RegWrite,MemRead,MemWrite);
+	decoder y (InstrReg,opcode,rs,rt,rd,shamt,const,address,funct,RegWrite,MemRead,MemWrite,RegDst,ALUSrc,PCSrc,Branch,ALUOp);
 always @ (posedge clk)
 begin
 	if (opcode == 4'b 0000 || opcode == 4'b 0001 || opcode == 4'b 0010 || opcode == 4'b 0011 || opcode == 4'b 0100) 
