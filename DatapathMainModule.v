@@ -79,44 +79,32 @@ begin
 	InstrReg = ROM[index][31:0];
 end
 	
-	decoder y (InstrReg,opcode,rs,rt,rd,shamt,const,address,funct,RegWrite,MemRead,MemWrite,RegDst,ALUSrc,PCSrc,Branch,ALUOp);
+	decoder y (InstrReg,opcode,rs,rt,rd,shamt,const,address,funct,RegWrite,MemRead,MemWrite,RegDst,ALUSrc,PCSrc,Branch,MemtoReg,ALUOp);
 always @ (posedge clk)
 begin
 	a = RegisterFile[rs];
 	if(ALUSrc == 0)
-		b = RegisterFile[rd];
+		b = RegisterFile[rt];
 	else
 		b = const;
 end
 
-if()
 ALU z (a,b,shamt,out,zero);
 
 always @ (*)
 begin
-	if (RegWrite == 1 && MemWrite==0 && MemRead==0)
-  RegisterFile[rd]=d;
-  
-  //beq
-	if (opcode == 4'b 1110)
-	begin
-	 regdata=RegisterFile[rd];
-	   if (a==regdata)
-	     begin
-	     index=const; //constant acts as address 
-	      end
-	
-	end
-	 //bne
-	if (opcode == 4'b 1111)
-	begin
-	 regdata=RegisterFile[rd];
-	   if (a!=regdata)
-	     begin
-	     index=const; //constant acts as address 
-	      end
-	
-	end
+if(RegWrite == 1)
+	RegisterFile[rd] = out;
+if(MemRead == 1 && MemtoReg == 1)
+begin
+if(RegDst = 1)
+RegisterFile[rd] = DataMemory[out];
+else 
+RegisterFile[rt] = DataMemory[out];
+end
+if(MemWrite == 1)
+DataMemory[out] = RegisterFile[rt];
+
 end
 
  

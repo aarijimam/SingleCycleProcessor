@@ -39,9 +39,15 @@ always @(*)
 			out = ~(a|b);
 		else if(funct == 6'b 100110) //xor
 			out = (a&~b) + (~a&b);
+		else
+		begin
+	 	$display ("Error:  Incorrent funct");
+		end
 	end
 	if(out == 0)
 		zero = 1;
+	else
+		zero = 0;
 
 		
 	end

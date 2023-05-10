@@ -1,12 +1,12 @@
 	
-	module decoder (InstrReg,opcode,rs,rt,rd,shamt,const,address,funct,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,ALUOp);
+	module decoder (InstrReg,opcode,rs,rt,rd,shamt,const,address,funct,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,MemtoReg,ALUOp);
 	input [31:0]InstrReg;
 	output reg [4:0]rd,rs,rt,shamt;
 	output reg [25:0]address;
 	output reg [5:0]opcode,funct;
 	output reg [15:0]const;
 	//Control Unit
-	output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch;
+	output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,MemtoReg;
 	output reg [1:0]ALUOp;
 always @ (*)
 begin
@@ -30,6 +30,7 @@ begin
 		RegDst = 1;
 		ALUSrc = 0;
 		Branch = 0;
+		MemtoReg = 0;
 		ALUOp = 2'b 10;
 	end
 
@@ -43,6 +44,7 @@ begin
 		RegDst = 0;
 		ALUSrc = 1;
 		Branch = 0;
+		MemtoReg = 0;
 		ALUOp = 2'b 00;
 	end
 	//		li(pseudo)
@@ -54,6 +56,7 @@ begin
 		RegDst = 0;
 		ALUSrc = 1;
 		Branch = 0;
+		MemtoReg = 0;
 		ALUOp = 2'b 00;
 	end
 	//		lw
@@ -65,6 +68,7 @@ begin
 		RegDst = 0;
 		ALUSrc = 1;
 		Branch = 0;
+		MemtoReg = 1;
 		ALUOp = 2'b 00;
 	end
 	//			sw
@@ -76,6 +80,7 @@ begin
 		RegDst = 1;
 		ALUSrc = 1;
 		Branch = 0;
+		MemtoReg = 0;
 		ALUOp = 2'b 00;
 	end
 
@@ -93,6 +98,7 @@ begin
 		RegDst = 1;
 		ALUSrc = 0;
 		Branch = 1;
+		MemtoReg = 0;
 		ALUOp = 2'b 01;
 	end
 
