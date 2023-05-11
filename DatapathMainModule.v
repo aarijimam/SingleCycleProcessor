@@ -83,27 +83,37 @@ end
 always @ (posedge clk)
 begin
 	a = RegisterFile[rs];
-	if(ALUSrc == 0)
+	if(ALUSrc == 0) // r type (rs op rt)
 		b = RegisterFile[rt];
-	else
+	else // i type (immidiate)
 		b = const;
 end
 
-ALU z (a,b,shamt,out,zero);
+ALU z (a,b,shamt,funct,ALUOp,out,zero);
 
 always @ (*)
 begin
-if(RegWrite == 1)
-	RegisterFile[rd] = out;
-if(MemRead == 1 && MemtoReg == 1)
-begin
-if(RegDst = 1)
-RegisterFile[rd] = DataMemory[out];
-else 
-RegisterFile[rt] = DataMemory[out];
+
+if(RegWrite == 1) // r type reg writing
+begin 
+	if(MemtoReg == 0)
+	begin
+		if (RegDst == 1)
+			RegisterFile[rd] = out;
+		else
+			RegisterFile[rs] = out 
+	end
+	else if(MemRead == 1 && MemtoReg == 1) // lw
+	begin 
+		if(RegDst == 1)
+			RegisterFile[rd] = DataMemory[out];
+		else 
+			RegisterFile[rt] = DataMemory[out];
+	end
 end
-if(MemWrite == 1)
-DataMemory[out] = RegisterFile[rt];
+
+if(MemWrite == 1) // sw
+	DataMemory[out] = RegisterFile[rt];
 
 end
 

@@ -19,9 +19,7 @@ begin
 	const = InstrReg[15:0];
 	address = InstrReg[25:0];
 
-	//			add						sub						mul					div						sll
-	
-	// 			srl						or						and					nor						xor
+	//Control Unit
 	if(opcode == 6'b 000000)
 	begin
 		MemWrite = 0;
@@ -33,6 +31,7 @@ begin
 		MemtoReg = 0;
 		ALUOp = 2'b 10;
 	end
+
 
 	//I Type
 	// 		addi				
