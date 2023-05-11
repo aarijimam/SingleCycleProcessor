@@ -1,12 +1,12 @@
 	
-	module decoder (InstrReg,opcode,rs,rt,rd,shamt,const,address,funct,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,MemtoReg,ALUOp);
+	module decoder (InstrReg,opcode,funct,rs,rt,rd,shamt,const,address,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,ALUOp);
 	input [31:0]InstrReg;
-	output reg [4:0]rd,rs,rt,shamt;
-	output reg [25:0]address;
 	output reg [5:0]opcode,funct;
+	output reg [4:0]rs,rt,rd,shamt;
 	output reg [15:0]const;
+	output reg [25:0]address;
 	//Control Unit
-	output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,MemtoReg;
+	output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg;
 	output reg [1:0]ALUOp;
 always @ (*)
 begin
@@ -20,7 +20,8 @@ begin
 	address = InstrReg[25:0];
 
 	//Control Unit
-	if(opcode == 6'b 000000)
+	//R Type
+	if(opcode == 6'b 000000) 
 	begin
 		MemWrite = 0;
 		MemRead = 0;
@@ -28,6 +29,7 @@ begin
 		RegDst = 1;
 		ALUSrc = 0;
 		Branch = 0;
+		Jump = 0;
 		MemtoReg = 0;
 		ALUOp = 2'b 10;
 	end
@@ -43,6 +45,7 @@ begin
 		RegDst = 0;
 		ALUSrc = 1;
 		Branch = 0;
+		Jump = 0;
 		MemtoReg = 0;
 		ALUOp = 2'b 00;
 	end
@@ -55,6 +58,7 @@ begin
 		RegDst = 0;
 		ALUSrc = 1;
 		Branch = 0;
+		Jump = 0;
 		MemtoReg = 0;
 		ALUOp = 2'b 00;
 	end
@@ -67,6 +71,7 @@ begin
 		RegDst = 0;
 		ALUSrc = 1;
 		Branch = 0;
+		Jump = 0;
 		MemtoReg = 1;
 		ALUOp = 2'b 00;
 	end
@@ -79,6 +84,7 @@ begin
 		RegDst = 1;
 		ALUSrc = 1;
 		Branch = 0;
+		Jump = 0;
 		MemtoReg = 0;
 		ALUOp = 2'b 00;
 	end
@@ -86,24 +92,33 @@ begin
 	//			jump
 	else if(opcode == 000010)
 	begin 
-
+		MemWrite = 0; //X
+		MemRead = 0; //X
+		RegWrite = 0; //X
+		RegDst = 0; //X
+		ALUSrc = 0; //X
+		Branch = 0; //X
+		Jump = 1;
+		MemtoReg = 0; //X
+		ALUOp = 2'b 00; //X
 	end
 	//		beq
 	else if(opcode == 000100)
 	begin 
-		MemWrite = 0;
-		MemRead = 0;
-		RegWrite = 0;
+		MemWrite = 0; //X
+		MemRead = 0; //X
+		RegWrite = 0; //X
 		RegDst = 1;
 		ALUSrc = 0;
 		Branch = 1;
-		MemtoReg = 0;
+		Jump = 0;
+		MemtoReg = 0; //X
 		ALUOp = 2'b 01;
 	end
 
 	else
 	begin
-	 $display ("Error:  Incorrent Operand");
+	 $display ("Error: Incorrent Operand");
 	end
 end
 	endmodule
