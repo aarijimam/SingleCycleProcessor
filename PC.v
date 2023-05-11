@@ -10,7 +10,7 @@ reg [31:0]branch_address;
 
 always @ (posedge clk)
 begin
-    indexOut = index + 4;
+    indexOut = index + 1;
     branch_address = indexOut + (const << 2);
     jump_address = address << 2;
     jump_address[31:28] = indexOut [31:28];

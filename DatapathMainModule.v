@@ -7,21 +7,21 @@
     reg [31:0] DataMemory [7:0];
 	input clk,reset;
 	reg [31:0]index;
-	reg [1:0]type;
+	wire [31:0]indexout;
 	wire[31:0]out;
 	wire [5:0]opcode, funct;
 	wire [4:0]rd,rs,rt,shamt;
-	reg [31:0]a,b,memoryvalue,regdata,InstrReg;
+	reg [31:0]a,b,InstrReg;
 	wire [15:0]const;
 	wire [25:0]address;
 	wire RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,Zero;
 	wire [1:0] ALUOp;
-	wire [15:0] d,dataaddress;
-	reg [3:0] ra;
+
 initial
 begin
 	index=0;
 end
+	
 	//Instruction Memory/ROM
 initial
 begin
@@ -82,7 +82,7 @@ begin
 end
 	
 decoder y (InstrReg,opcode[5:0],funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemRead,MemWrite,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
-always @ (posedge clk)
+always @ (*)
 begin
 	a = RegisterFile[rs];
 	if(ALUSrc == 0) // r type (rs op rt)
@@ -120,7 +120,11 @@ if(MemWrite == 1) // sw
 end
 
 //PC
-PC pc (clk, index, index, Jump, Branch, Zero, address, const);
+PC pc (clk, index, indexout[31:0], Jump, Branch, Zero, address, const);
+always @ (*)
+begin
+	index = indexout;
+end
 
 endmodule 
   
