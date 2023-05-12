@@ -25,11 +25,11 @@ end
 	//Instruction Memory/ROM
 initial
 begin
-	 ROM[0] = 32'b 00000000000000010001000000100000;   
-	 ROM[1] = 32'b 00000000011001000010100000100010;
-    ROM[2] = 32'b 00000000100001000001000111000000;
-    ROM[3] = 32'b 00000000110001000001100000000000;
-    ROM[4] = 32'b 00000000000000000010100001000000;
+	ROM[0] = 32'b 00000000000000010001000000100000;//add r0 r1 r2
+	ROM[1] = 32'b 00000000011001000010100000100010;//sub r3 r4 r5
+    ROM[2] = 32'b 10001100110001000000000000000001; // lw r4,1(r6)
+	ROM[3] = 32'b 10101100110001000000000000000010;// sw r4,2(r6)
+	ROM[4] = 32'b 00100000000001110000000000000111;// addi r0,r7,7
     ROM[5] = 32'b 00010000110001000001000001000000;
     ROM[6] = 32'b 00000000110001000001000000000000;
     ROM[7] = 32'b 00000000100000000000100001000000;
@@ -53,7 +53,7 @@ begin
   RegisterFile[3] = 32'b 00000000000000000000000000000101;
   RegisterFile[4] = 32'b 00000000000000000000000000000001;
   RegisterFile[5] = 32'b 00000000000000000000000000000001;
-  RegisterFile[6] = 32'b 00000000000000000000000000000001;
+  RegisterFile[6] = 32'b 00000000000000000000000000000000;
   RegisterFile[7] = 32'b 00000000000000000000000000000001;
   //RegisterFile[8] = 16'b 0000000000000000;
 end
@@ -61,7 +61,7 @@ end
 initial
 begin
   DataMemory[0] = 32'b 0000000000000000;
-  DataMemory[1] = 32'b 0000000000000000;
+  DataMemory[1] = 32'b 0000000000011100;
   DataMemory[2] = 32'b 0000000000000111;
   DataMemory[3] = 32'b 0000000000011011;
   DataMemory[4] = 32'b 0000001111111111;
@@ -78,7 +78,7 @@ begin
 	InstrReg = ROM[index][31:0];
 end
 	
-decoder y (InstrReg,opcode[5:0],funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemRead,MemWrite,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
+decoder y (InstrReg,opcode[5:0],funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
 always @ (*)
 begin
 	a = RegisterFile[rs];
@@ -100,7 +100,7 @@ begin
 		if (RegDst == 1)
 			RegisterFile[rd] = out;
 		else
-			RegisterFile[rs] = out; 
+			RegisterFile[rt] = out; 
 	end
 	else if(MemRead == 1 && MemtoReg == 1) // lw
 	begin 

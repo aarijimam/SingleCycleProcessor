@@ -21,6 +21,7 @@ begin
 
 	//Control Unit
 	//R Type
+	begin
 	if(opcode == 6'b 000000) 
 	begin
 		MemWrite = 0;
@@ -37,7 +38,7 @@ begin
 
 	//I Type
 	// 		addi				
-	else if(opcode == 001000)
+	else if(opcode == 6'b 001000)
 	begin
 		MemWrite = 0;
 		MemRead = 0;
@@ -50,7 +51,7 @@ begin
 		ALUOp = 2'b 00;
 	end
 	//		li(pseudo)
-	else if(opcode == 100111)
+	else if(opcode == 6'b 100111)
 	begin 
 		MemWrite = 0;
 		MemRead = 0;
@@ -63,7 +64,7 @@ begin
 		ALUOp = 2'b 00;
 	end
 	//		lw
-	else if(opcode == 100011)
+	else if(opcode == 6'b 100011)
 	begin 
 		MemWrite = 0;
 		MemRead = 1;
@@ -76,7 +77,7 @@ begin
 		ALUOp = 2'b 00;
 	end
 	//			sw
-	else if(opcode == 101011)
+	else if(opcode == 6'b 101011)
 	begin 
 		MemWrite = 1;
 		MemRead = 0;
@@ -90,7 +91,7 @@ begin
 	end
 
 	//			jump
-	else if(opcode == 000010)
+	else if(opcode == 6'b 000010)
 	begin 
 		MemWrite = 0; //X
 		MemRead = 0; //X
@@ -103,7 +104,7 @@ begin
 		ALUOp = 2'b 00; //X
 	end
 	//		beq
-	else if(opcode == 000100)
+	else if(opcode == 6'b 000100)
 	begin 
 		MemWrite = 0; //X
 		MemRead = 0; //X
@@ -119,6 +120,7 @@ begin
 	else
 	begin
 	 $display ("Error: Incorrent Operand");
+	end
 	end
 end
 	endmodule
