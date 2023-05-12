@@ -73,11 +73,8 @@ end
 
   
   //determining instruction type + decoding
-always@(posedge clk, negedge reset)
+always@(posedge clk)
 begin
-    if (reset==1)
-		index=0;
-    else
 	InstrReg = ROM[index][31:0];
 end
 	
