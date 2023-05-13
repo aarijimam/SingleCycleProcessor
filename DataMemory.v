@@ -1,4 +1,5 @@
 module DataMemory(address,write_data,MemRead,MemWrite,read_data);
+
 input [31:0]address,write_data;
 input MemRead,MemWrite;
 output reg [31:0]read_data;
