@@ -3,7 +3,7 @@
  module datapath(clk,reset);
  
 	reg [15:0] ROM [15:0];
-  reg [15:0] RegisterFile [7:0];
+  	
     reg [15:0] DataMemory [7:0];
 	input clk,reset;
 	reg [3:0]index;
@@ -21,39 +21,6 @@ begin
 	index=0;
 end
 	//Instruction Memory/ROM
-initial
-begin
-	ROM[0] = 16'b 0000110100010000;
-	ROM[1] = 16'b 0100110100010001;
-	ROM[2] = 16'b 0000100100010111;
-	ROM[3] = 16'b 0000110100011000;
-	ROM[4] = 16'b 0000000000101001;
-	ROM[5] = 16'b 0100110100010001;
-	ROM[6] = 16'b 0000110100010000;
-	ROM[7] = 16'b 0000100000001001;
-	ROM[8] = 16'b 0001100101000000;
-	ROM[9] = 16'b 0001100101000000;
-	ROM[10] = 16'b 0001100101000000;
-	ROM[11] = 16'b 0100000101001110;
-	ROM[12] = 16'b 0001100101000000;
-	ROM[13] = 16'b 1100000101000001;
-	ROM[14] = 16'b 0000001110110111;
-	ROM[15] = 16'b 0001100101000000;
-end
-
-//Register Files
-initial
-begin
-  RegisterFile[0] = 16'b 0000000000000000;
-  RegisterFile[1] = 16'b 0000000000000000;
-  RegisterFile[2] = 16'b 0000000000000010;
-  RegisterFile[3] = 16'b 0000000000000001;
-  RegisterFile[4] = 16'b 0000000000000000;
-  RegisterFile[5] = 16'b 0000000000000001;
-  RegisterFile[6] = 16'b 0000000000000001;
-  RegisterFile[7] = 16'b 0000000000000001;
-  //RegisterFile[8] = 16'b 0000000000000000;
-end
 
 initial
 begin

@@ -2,83 +2,32 @@
 
  module datapath(clk,reset);
  
-	reg [31:0] ROM [15:0];
- 	reg [31:0] RegisterFile [7:0];
-    reg [31:0] DataMemory [7:0];
 	input clk,reset;
 	wire [31:0]index;
 	wire [31:0]indexout;
 	wire[31:0]out;
 	wire [5:0]opcode, funct;
 	wire [4:0]rd,rs,rt,shamt;
-	reg [31:0]a,b,InstrReg;
+	wire [31:0]a,b,InstrReg;
 	wire [15:0]const;
 	wire [25:0]address;
 	wire RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,Zero;
 	wire [1:0] ALUOp;
 
-/*initial
-begin
-	index=0;
-end*/
+
+
+
+//PC
+PC pc (clk, reset, index, Jump, Branch, Zero, address, const);
+
+//Instruction Fetch
+ROM(index,InstrReg);
 	
-	//Instruction Memory/ROM
-initial
-begin
-	ROM[0] = 32'b 00000000000000010001000000100000;//add r0 r1 r2
-	ROM[1] = 32'b 00000000011001000010100000100010;//sub r3 r4 r5
-    ROM[2] = 32'b 10001100110001000000000000000001; // lw r4,1(r6)
-	ROM[3] = 32'b 10101100110001000000000000000010;// sw r4,2(r6)
-	ROM[4] = 32'b 00100000000001110000000000000111;// addi r0,r7,7
-    ROM[5] = 32'b 00010000110001000001000001000000;
-    ROM[6] = 32'b 00000000110001000001000000000000;
-    ROM[7] = 32'b 00000000100000000000100001000000;
-    ROM[8] = 32'b 00000100100001010000000000000000;
-    ROM[9] = 32'b 00000100100001010000000000000000;
-    ROM[10] = 32'b 00000100100001010000000000000000;
-    ROM[11] = 32'b 00010000000001010000100110000000;
-    ROM[12] = 32'b 00000100100001010000000000000000;
-    ROM[13] = 32'b 00110000000001010000000001000000;
-    ROM[14] = 32'b 00000000001001100011000111000000;
-    ROM[15] = 32'b 00000100100001010000000000000000;
-//                 funct  shamt  rd    rt    rs   opcode  
-end
-
-//Register Files
-initial
-begin
-  RegisterFile[0] = 32'b 00000000000000000000000000000001;
-  RegisterFile[1] = 32'b 00000000000000000000000000000010;
-  RegisterFile[2] = 32'b 00000000000000000000000000000000;
-  RegisterFile[3] = 32'b 00000000000000000000000000000101;
-  RegisterFile[4] = 32'b 00000000000000000000000000000001;
-  RegisterFile[5] = 32'b 00000000000000000000000000000001;
-  RegisterFile[6] = 32'b 00000000000000000000000000000000;
-  RegisterFile[7] = 32'b 00000000000000000000000000000001;
-  //RegisterFile[8] = 16'b 0000000000000000;
-end
-
-initial
-begin
-  DataMemory[0] = 32'b 0000000000000000;
-  DataMemory[1] = 32'b 0000000000011100;
-  DataMemory[2] = 32'b 0000000000000111;
-  DataMemory[3] = 32'b 0000000000011011;
-  DataMemory[4] = 32'b 0000001111111111;
-  DataMemory[5] = 32'b 0000000000000000;
-  DataMemory[6] = 32'b 0000000000000001;
-  DataMemory[7] = 32'b 0000000000000001;
-  //DataMemory[8] = 16'b 0000000000000000;
-end
-
-  
-  //determining instruction type + decoding
-always@(posedge clk)
-begin
-	InstrReg = ROM[index][31:0];
-end
-	
+//Decoder
 decoder y (InstrReg,opcode[5:0],funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
+
+//Register File
+RegisterFile(rs,rt,)
 always @ (*)
 begin
 	a = RegisterFile[rs];
@@ -116,12 +65,7 @@ if(MemWrite == 1) // sw
 
 end
 
-//PC
-PC pc (clk, reset, index, Jump, Branch, Zero, address, const);
-/*always @ (*)
-begin
-	index = indexout;
-end*/
+
 
 endmodule 
   
