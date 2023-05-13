@@ -1,12 +1,10 @@
 module RegisterFile(rs,rt,write_reg,RegWrite,write_data,a,b);
-input [4:0]rs,rt,rd;
+input [4:0]rs,rt,write_reg;
 input RegWrite;
 input [31:0]write_data;
 output reg [31:0]a,b;
 reg [31:0] RegisterFile [7:0];
 
-
-//Register Files
 //Register Files
 initial
 begin
@@ -28,6 +26,8 @@ begin
 
     if(RegWrite)
         RegisterFile[write_reg] = write_data;
+    else
+        RegisterFile[write_reg] = RegisterFile[write_reg];
 end
 
 endmodule

@@ -7,8 +7,8 @@
 	wire [31:0]indexout;
 	wire[31:0]out;
 	wire [5:0]opcode, funct;
-	wire [4:0]rd,rs,rt,shamt;
-	wire [31:0]a,b,InstrReg;
+	wire [4:0]rd,rs,rt,shamt, write_reg;
+	wire [31:0]a,b,write_data,read_data,InstrReg,alu_inp;
 	wire [15:0]const;
 	wire [25:0]address;
 	wire RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,Zero;
@@ -21,50 +21,26 @@
 PC pc (clk, reset, index, Jump, Branch, Zero, address, const);
 
 //Instruction Fetch
-ROM(index,InstrReg);
+ROM rom (index,InstrReg);
 	
 //Decoder
 decoder y (InstrReg,opcode[5:0],funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
 
+mux write_selector(read_data,out,MemtoReg,write_data);
+
+mux dest_selector(rd,rt,RegDst,write_reg);
 //Register File
-RegisterFile(rs,rt,)
-always @ (*)
-begin
-	a = RegisterFile[rs];
-	if(ALUSrc == 0) // r type (rs op rt)
-		b = RegisterFile[rt];
-	else // i type (immidiate)
-		b = const;
-end
+RegisterFile r (rs, rt, write_reg, RegWrite, write_data, a, b);
 
-ALU z (a[15:0],b[15:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
 
-always @ (*)
-begin
+mux ALU_input_selector(const,b,ALUSrc,alu_inp);
+//ALU
+ALU z (a[31:0],alu_inp[31:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
 
-if(RegWrite == 1) // r type reg writing
-begin 
-	if(MemtoReg == 0)
-	begin
-		if (RegDst == 1)
-			RegisterFile[rd] = out;
-		else
-			RegisterFile[rt] = out; 
-	end
-	else if(MemRead == 1 && MemtoReg == 1) // lw
-	begin 
-		if(RegDst == 1)
-			RegisterFile[rd] = DataMemory[out];
-		else 
-			RegisterFile[rt] = DataMemory[out];
-	end
-end
 
-if(MemWrite == 1) // sw
-	DataMemory[out] = RegisterFile[rt];
-
-end
-
+//Data Memory
+//DataMemory(address,write_data,MemRead,MemWrite,read_data);
+DataMemory dm (out,b,MemRead,MemWrite,read_data);
 
 
 endmodule 
