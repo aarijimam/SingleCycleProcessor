@@ -6,7 +6,7 @@
  	reg [31:0] RegisterFile [7:0];
     reg [31:0] DataMemory [7:0];
 	input clk,reset;
-	reg [31:0]index;
+	wire [31:0]index;
 	wire [31:0]indexout;
 	wire[31:0]out;
 	wire [5:0]opcode, funct;
@@ -17,10 +17,10 @@
 	wire RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,Zero;
 	wire [1:0] ALUOp;
 
-initial
+/*initial
 begin
 	index=0;
-end
+end*/
 	
 	//Instruction Memory/ROM
 initial
@@ -117,11 +117,11 @@ if(MemWrite == 1) // sw
 end
 
 //PC
-PC pc (clk, index, indexout[31:0], Jump, Branch, Zero, address, const);
-always @ (*)
+PC pc (clk, reset, index, Jump, Branch, Zero, address, const);
+/*always @ (*)
 begin
 	index = indexout;
-end
+end*/
 
 endmodule 
   
