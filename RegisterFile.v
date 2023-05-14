@@ -1,9 +1,9 @@
-module RegisterFile(rs,rt,write_reg,RegWrite,write_data,a,b);
-
+module RegisterFile(clk, rs,rt,write_reg,RegWrite,write_data,a,b);
+input clk;
 input [4:0]rs,rt,write_reg;
 input RegWrite;
 input [31:0]write_data;
-output reg [31:0]a,b;
+output [31:0]a,b;
 reg [31:0] RegisterFile [7:0];
 
 //Register Files
@@ -20,15 +20,16 @@ begin
   //RegisterFile[8] = 16'b 0000000000000000;
 end
 
-always @ (*)
-begin
-    a = RegisterFile[rs];
-    b = RegisterFile[rt];
+assign a = RegisterFile[rs];
+assign b = RegisterFile[rt];
 
+
+always @ (posedge clk)
+begin
     if(RegWrite)
-        RegisterFile[write_reg] = write_data;
+        RegisterFile[write_reg] <= write_data;
     else
-        RegisterFile[write_reg] = RegisterFile[write_reg];
+        RegisterFile[write_reg] <= RegisterFile[write_reg];
 end
 
 endmodule

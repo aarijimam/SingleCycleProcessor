@@ -30,7 +30,7 @@ mux write_selector(read_data,out,MemtoReg,write_data);
 
 mux dest_selector(rd,rt,RegDst,write_reg);
 //Register File
-RegisterFile r (rs, rt, write_reg, RegWrite, write_data, a, b);
+RegisterFile r (clk, rs, rt, write_reg, RegWrite, write_data, a, b);
 
 
 mux ALU_input_selector(const,b,ALUSrc,alu_inp);
