@@ -27,9 +27,9 @@ assign b = RegisterFile[rt];
 always @ (posedge clk)
 begin
     if(RegWrite)
-        RegisterFile[write_reg] <= write_data;
+        RegisterFile[write_reg] = write_data;
     else
-        RegisterFile[write_reg] <= RegisterFile[write_reg];
+        RegisterFile[write_reg] = RegisterFile[write_reg];
 end
 
 endmodule
