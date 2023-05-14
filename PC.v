@@ -4,7 +4,7 @@ input clk,reset;
 output reg [31:0]index;
 input Jump,Branch, Zero;
 input  [25:0]address;
-input  [15:0]const;
+input  [31:0]const;
 
 always @ (posedge clk)
 begin
@@ -14,8 +14,6 @@ begin
 	end
 	else
 	begin
-    index = index + 1;
-
     if(Branch & Zero)
     begin
         index = index + const;
@@ -24,8 +22,8 @@ begin
     begin
         index = address;
     end
-    else
-        index = index;
+    
+	index = index +1;
 	end
 end
 
