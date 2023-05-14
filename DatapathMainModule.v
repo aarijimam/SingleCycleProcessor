@@ -6,12 +6,12 @@
 	wire [31:0]index;
 	wire [31:0]indexout;
 	wire[31:0]out;
-	wire [5:0]opcode, funct;
+	wire [5:0]funct;
 	wire [4:0]rd,rs,rt,shamt, write_reg;
 	wire [31:0]a,b,write_data,read_data,InstrReg,alu_inp,extended_const;
 	wire [15:0]const;
 	wire [25:0]address;
-	wire RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,Zero;
+	wire RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,Zero;
 	wire [1:0] ALUOp;
 
 
@@ -24,7 +24,7 @@ PC pc (clk, reset, index, Jump, Branch, Zero, address, extended_const);
 ROM rom (index,InstrReg);
 	
 //Decoder
-decoder y (InstrReg,opcode[5:0],funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
+decoder y (InstrReg,funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
 
 sign_extend_16 extender (const,extended_const);
 

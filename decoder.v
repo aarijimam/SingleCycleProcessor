@@ -1,12 +1,13 @@
 	
-	module decoder (InstrReg,opcode,funct,rs,rt,rd,shamt,const,address,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg,ALUOp);
+	module decoder (InstrReg,funct,rs,rt,rd,shamt,const,address,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,ALUOp);
 	input [31:0]InstrReg;
-	output reg [5:0]opcode,funct;
+	reg [5:0]opcode;
+	output reg [5:0]funct;
 	output reg [4:0]rs,rt,rd,shamt;
 	output reg [15:0]const;
 	output reg [25:0]address;
 	//Control Unit
-	output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,PCSrc,Branch,Jump,MemtoReg;
+	output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg;
 	output reg [1:0]ALUOp;
 always @ (*)
 begin
