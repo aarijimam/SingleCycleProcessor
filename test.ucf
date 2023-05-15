@@ -1,0 +1,17 @@
+NET clk LOC = C9;
+NET reset LOC = T9;
+
+
+NET sseg_anode[0] LOC = N16;
+NET sseg_anode[1] LOC = N15;
+NET sseg_anode[2] LOC = P18;
+NET sseg_anode[3] LOC = P17;
+
+NET sseg_cathode[0] LOC = T17;
+NET sseg_cathode[1] LOC = T18;
+NET sseg_cathode[2] LOC = U17;
+NET sseg_cathode[3] LOC = U18;
+NET sseg_cathode[4] LOC = M14;
+NET sseg_cathode[5] LOC = N14;
+NET sseg_cathode[6] LOC = L14;
+//NET sseg_cathode[7] LOC = M13;
