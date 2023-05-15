@@ -41,7 +41,6 @@ ALU z (a[31:0],alu_inp[31:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
 
 
 //Data Memory
-//DataMemory(address,write_data,MemRead,MemWrite,read_data);
 DataMemory dm (clk, out,b,MemRead,MemWrite,read_data);
 
 
