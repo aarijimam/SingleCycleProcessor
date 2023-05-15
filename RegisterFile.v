@@ -25,11 +25,23 @@ assign b = RegisterFile[rt];
 
 
 always @ (posedge clk)
+/*begin
+if(reset == 1)
+begin
+  RegisterFile[0] = 32'b 00000000000000000000000000000001;
+  RegisterFile[1] = 32'b 00000000000000000000000000000010;
+  RegisterFile[2] = 32'b 00000000000000000000000000000000;
+  RegisterFile[3] = 32'b 00000000000000000000000000000101;
+  RegisterFile[4] = 32'b 00000000000000000000000000000001;
+  RegisterFile[5] = 32'b 00000000000000000000000000000001;
+  RegisterFile[6] = 32'b 00000000000000000000000000000000;
+  RegisterFile[7] = 32'b 00000000000000000000000000000001;
+end
+else*/
 begin
     if(RegWrite)
         RegisterFile[write_reg] = write_data;
     else
         RegisterFile[write_reg] = RegisterFile[write_reg];
 end
-
 endmodule

@@ -1,6 +1,6 @@
 	//ALU Block
 	module ALU (a,b,shamt,funct,ALUOp,out,zero);
-	input  [15:0]a,b;
+	input  [31:0]a,b;
 	input  [4:0]shamt;
 	input [5:0]funct;
 	input [1:0]ALUOp;

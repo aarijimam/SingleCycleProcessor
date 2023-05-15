@@ -1,11 +1,11 @@
 
 
- module datapath(clk,reset);
+ module datapath(clk,reset,sseg_cathode,sseg_anode);
  
 	input clk,reset;
 	wire [31:0]index;
 	wire [31:0]indexout;
-	wire[31:0]out;
+	wire [31:0]out;
 	wire [5:0]funct;
 	wire [4:0]rd,rs,rt,shamt, write_reg;
 	wire [31:0]a,b,write_data,read_data,InstrReg,alu_inp,extended_const;
@@ -13,8 +13,8 @@
 	wire [25:0]address;
 	wire RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,Zero;
 	wire [1:0] ALUOp;
-
-
+	output wire [6:0]sseg_cathode;
+	output wire [3:0]sseg_anode;
 
 
 //PC
@@ -30,7 +30,7 @@ sign_extend_16 extender (const,extended_const);
 
 mux write_selector(read_data,out,MemtoReg,write_data);
 
-mux dest_selector(rd,rt,RegDst,write_reg);
+mux dest_selector(rd[4:0],rt,RegDst,write_reg);
 //Register File
 RegisterFile r (clk, rs, rt, write_reg, RegWrite, write_data, a, b);
 
@@ -44,6 +44,7 @@ ALU z (a[31:0],alu_inp[31:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
 //DataMemory(address,write_data,MemRead,MemWrite,read_data);
 DataMemory dm (clk, out,b,MemRead,MemWrite,read_data);
 
+seven_seg seg (out[3:0],sseg_cathode,sseg_anode);
 
 endmodule 
   
