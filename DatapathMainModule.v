@@ -1,11 +1,12 @@
 
 
- module datapath(clk,reset,sseg_cathode,sseg_anode);
+ module datapath(clk,reset,display_control,sseg_cathode,sseg_anode);
  
 	input clk,reset;
+	input [1:0]display_control;
 	wire [31:0]index;
 	wire [31:0]indexout;
-	wire [31:0]out;
+	wire [31:0]out,display_value;
 	wire [5:0]funct;
 	wire [4:0]rd,rs,rt,shamt, write_reg;
 	wire [31:0]a,b,write_data,read_data,InstrReg,alu_inp,extended_const;
@@ -44,7 +45,9 @@ ALU z (a[31:0],alu_inp[31:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
 //DataMemory(address,write_data,MemRead,MemWrite,read_data);
 DataMemory dm (clk, out,b,MemRead,MemWrite,read_data);
 
-seven_seg seg (out[3:0],sseg_cathode,sseg_anode);
+seven_seg seg (display_value[3:0],sseg_cathode,sseg_anode);
+
+mux4_2 display_mux(out,a,b,0,display_control,display_value);
 
 endmodule 
   

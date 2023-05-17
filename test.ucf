@@ -1,6 +1,9 @@
 NET clk LOC = C9;
 NET reset LOC = T9;
 
+NET display_control[0] LOC = U8;
+NET display_control[1] LOC = V8;
+
 
 NET sseg_anode[0] LOC = N16;
 NET sseg_anode[1] LOC = N15;
