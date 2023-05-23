@@ -18,6 +18,9 @@
 	output wire [3:0]sseg_anode;
 
 
+	wire [31:0] a_out;
+	wire [31:0] b_out;
+
 //PC
 PC pc (clk, reset, index, Jump, Branch, Zero, address, extended_const, out);
 
@@ -37,8 +40,13 @@ RegisterFile r (clk, reset, rs, rt, write_reg, RegWrite, write_data, a, b);
 
 
 mux ALU_input_selector(extended_const,b,ALUSrc,alu_inp);
+
+register a_reg(.clk(clk),.reset(rst),.a_in(a),.a_out(a_out));
+register b_reg(.clk(clk),.reset(rst),.a_in(alu_inp),.a_out(b_out));
+
+
 //ALU
-ALU z (clk, a[31:0],alu_inp[31:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
+ALU z (clk, a_out[31:0],b_out[31:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
 
 
 //Data Memory
