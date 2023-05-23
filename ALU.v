@@ -1,5 +1,6 @@
 	//ALU Block
-	module ALU (a,b,shamt,funct,ALUOp,out,zero);
+	module ALU (clk, a,b,shamt,funct,ALUOp,out,zero);
+	input clk;
 	input  [31:0]a,b;
 	input  [4:0]shamt;
 	input [5:0]funct;
@@ -7,7 +8,7 @@
 	output reg [31:0] out;
 	output reg zero;
 
-always @(*)
+always @(posedge clk)
 	begin
 	if(ALUOp == 2'b 00)
 	begin

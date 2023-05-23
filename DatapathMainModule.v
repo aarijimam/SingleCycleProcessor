@@ -19,7 +19,7 @@
 
 
 //PC
-PC pc (clk, reset, index, Jump, Branch, Zero, address, extended_const);
+PC pc (clk, reset, index, Jump, Branch, Zero, address, extended_const, out);
 
 //Instruction Fetch
 ROM rom (clk, index,InstrReg);
@@ -38,7 +38,7 @@ RegisterFile r (clk, reset, rs, rt, write_reg, RegWrite, write_data, a, b);
 
 mux ALU_input_selector(extended_const,b,ALUSrc,alu_inp);
 //ALU
-ALU z (a[31:0],alu_inp[31:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
+ALU z (clk, a[31:0],alu_inp[31:0],shamt[4:0],funct[5:0],ALUOp[1:0],out[31:0],Zero);
 
 
 //Data Memory
