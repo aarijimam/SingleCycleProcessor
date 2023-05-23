@@ -3,7 +3,7 @@ input clk,reset;
 input [4:0]rs,rt,write_reg;
 input RegWrite;
 input [31:0]write_data;
-output [31:0]a,b;
+output reg [31:0]a,b;
 reg [31:0] RegisterFile [7:0];
 
 //Register Files
@@ -20,12 +20,10 @@ begin
   //RegisterFile[8] = 16'b 0000000000000000;
 end*/
 
-assign a = RegisterFile[rs];
-assign b = RegisterFile[rt];
-
-
 always @ (posedge clk)
 begin
+a = RegisterFile[rs];
+b = RegisterFile[rt];
 if(reset == 1)
 begin
   RegisterFile[0] = 32'b 00000000000000000000000000000001;
