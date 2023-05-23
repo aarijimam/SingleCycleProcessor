@@ -22,10 +22,10 @@
 PC pc (clk, reset, index, Jump, Branch, Zero, address, extended_const);
 
 //Instruction Fetch
-ROM rom (index,InstrReg);
+ROM rom (clk, index,InstrReg);
 	
 //Decoder
-decoder y (InstrReg,funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
+decoder y (clk, InstrReg,funct[5:0],rs[4:0],rt[4:0],rd[4:0],shamt[4:0],const[15:0],address[25:0],RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,ALUOp[1:0]);
 
 sign_extend_16 extender (const,extended_const);
 

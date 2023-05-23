@@ -1,5 +1,6 @@
 	
-	module decoder (InstrReg,funct,rs,rt,rd,shamt,const,address,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,ALUOp);
+	module decoder (clk, InstrReg,funct,rs,rt,rd,shamt,const,address,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,ALUOp);
+	input clk;
 	input [31:0]InstrReg;
 	reg [5:0]opcode;
 	output reg [5:0]funct;

@@ -1,5 +1,6 @@
-module ROM(index,InstrReg);
+module ROM(clk, index,InstrReg);
 
+input clk;
 input [31:0]index;
 output reg [31:0]InstrReg;
 
