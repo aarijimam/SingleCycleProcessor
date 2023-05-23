@@ -9,7 +9,7 @@
 	//Control Unit
 	output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg;
 	output reg [1:0]ALUOp;
-always @ (*)
+always @ (posedge clk)
 begin
 	opcode = InstrReg[31:26];
 	rs = InstrReg[25:21];

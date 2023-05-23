@@ -28,7 +28,7 @@ begin
 //                 funct  shamt  rd    rt    rs   opcode  
 end
 
-always @ (*)
+always @ (posedge clk)
 begin
     InstrReg = ROM[index][31:0];
 end

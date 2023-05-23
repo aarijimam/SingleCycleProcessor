@@ -2,7 +2,7 @@ module DataMemory(clk, address,write_data,MemRead,MemWrite,read_data);
 input clk;
 input [31:0]address,write_data;
 input MemRead,MemWrite;
-output [31:0]read_data;
+output reg [31:0]read_data;
 
 reg [31:0] DataMemory [7:0];
 
@@ -20,11 +20,10 @@ begin
   //DataMemory[8] = 16'b 0000000000000000;
 end
 
-assign read_data = DataMemory[address];
-
-always @(posedge clk)
+always @ (posedge clk)
 begin 
- 
+    read_data = DataMemory[address];
+
     if(MemWrite)
         DataMemory[address] = write_data;
 
