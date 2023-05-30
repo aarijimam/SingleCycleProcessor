@@ -20,6 +20,8 @@
 
 	wire [31:0] a_out;
 	wire [31:0] b_out;
+	wire [31:0] write_data_out;
+	wire [31:0] rd_register;
 
 //PC
 PC pc (clk, reset, index, Jump, Branch, Zero, address, extended_const, out);
@@ -36,13 +38,17 @@ mux write_selector(read_data,out,MemtoReg,write_data);
 
 mux dest_selector(rd[4:0],rt,RegDst,write_reg);
 //Register File
-RegisterFile r (clk, reset, rs, rt, write_reg, RegWrite, write_data, a, b);
+RegisterFile r (clk, reset, rs, rt, write_reg, RegWrite, write_data_out, a, b);
+
+register reg_data(.clk(clk),.rst(reset),.a_in(write_data),.a_out(write_data_out));
+
+//register rd_reg(.clk(clk),.rst(reset),.a_in(rd),.a_out(rd_register));
 
 
 mux ALU_input_selector(extended_const,b,ALUSrc,alu_inp);
 
-register a_reg(.clk(clk),.reset(rst),.a_in(a),.a_out(a_out));
-register b_reg(.clk(clk),.reset(rst),.a_in(alu_inp),.a_out(b_out));
+register a_reg (.clk(clk),.rst(reset),.a_in(a),.a_out(a_out));
+register b_reg (.clk(clk),.rst(reset),.a_in(alu_inp),.a_out(b_out));
 
 
 //ALU
