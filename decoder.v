@@ -1,15 +1,15 @@
 	
-	module decoder (clk, InstrReg,funct,rs,rt,rd,shamt,const,address,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,ALUOp);
+	module decoder (clk, InstrReg,opcode,funct,rs,rt,rd,shamt,const,address);//,RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg,ALUOp);
 	input clk;
 	input [31:0]InstrReg;
-	reg [5:0]opcode;
+	output reg [5:0]opcode;
 	output reg [5:0]funct;
 	output reg [4:0]rs,rt,rd,shamt;
 	output reg [15:0]const;
 	output reg [25:0]address;
 	//Control Unit
-	output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg;
-	output reg [1:0]ALUOp;
+	/* output reg RegWrite,MemWrite,MemRead,RegDst,ALUSrc,Branch,Jump,MemtoReg;
+	output reg [1:0]ALUOp; */
 always @ (posedge clk)
 begin
 	opcode = InstrReg[31:26];
@@ -21,7 +21,7 @@ begin
 	const = InstrReg[15:0];
 	address = InstrReg[25:0];
 
-	//Control Unit
+	/* //Control Unit
 	//R Type
 	begin
 	if(opcode == 6'b 000000) 
@@ -123,6 +123,6 @@ begin
 	begin
 	 $display ("Error: Incorrent Operand");
 	end
-	end
+	end */
 end
 	endmodule
